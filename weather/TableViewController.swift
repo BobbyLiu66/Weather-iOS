@@ -9,6 +9,17 @@
 import UIKit
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let queryData = QueryData()
+        queryData.getSearchResults(searchTerm: "123") { results in
+            self.weatherCondition.text = results?.first?.weatherDescription
+            
+            self.degree.text = String(format: "%.0f",(results?.first?.weatherTemp)!)
+            
+            self.weatherCondition.text = results?.first?.weatherDescription
+        }
+    }
     
     
     @IBOutlet weak var weatherTableView: UITableView!{
@@ -58,7 +69,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 fatalError("The dequeued cell is not an instance of CurrentWeatherTableViewCell.")
             }
             
-            cell.today.text =  DateFormatter().weekdaySymbols[Calendar.current.component(.weekday, from: Date())]
+//            cell.today.text =  DateFormatter().weekdaySymbols[Calendar.current.component(.weekday, from: Date())]
+            cell.today.text = "Sat"
             cell.highestTemp.text = "17"
             cell.lowestTemp.text = "6"
             
