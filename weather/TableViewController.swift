@@ -9,15 +9,29 @@
 import UIKit
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    var currentWeather : [CurrentWeather] = []
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         let queryData = QueryData()
+        
         queryData.getSearchResults(searchTerm: "123") { results in
-            self.weatherCondition.text = results?.first?.weatherDescription
+            if let results = results {
+                
+                self.currentWeather = results
+                
+                self.weatherCondition.text = results.first?.weatherDescription
+                
+                self.degree.text = results.first?.weatherTemp.toString()
+                
+                self.weatherCondition.text = results.first?.weatherDescription
+                
+                self.weatherTableView.reloadData()
+            }
             
-            self.degree.text = String(format: "%.0f",(results?.first?.weatherTemp)!)
-            
-            self.weatherCondition.text = results?.first?.weatherDescription
         }
     }
     
@@ -69,10 +83,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 fatalError("The dequeued cell is not an instance of CurrentWeatherTableViewCell.")
             }
             
-//            cell.today.text =  DateFormatter().weekdaySymbols[Calendar.current.component(.weekday, from: Date())]
-            cell.today.text = "Sat"
-            cell.highestTemp.text = "17"
-            cell.lowestTemp.text = "6"
+            cell.today.text = Date().dayOfWeek()!
+            cell.highestTemp.text = currentWeather.first?.tempHighest.toString()
+            cell.lowestTemp.text = currentWeather.first?.tempLowest.toString()
             
             return cell
         } else if indexPath.row == 1 {
@@ -141,4 +154,19 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     */
 
+}
+
+extension Double {
+    func toString() -> String {
+        return String(format: "%.0f",self)
+    }
+}
+
+extension Date {
+    func dayOfWeek() -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        return dateFormatter.string(from: self).capitalized
+        // or use capitalized(with: locale) if you want
+    }
 }

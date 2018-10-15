@@ -29,6 +29,8 @@ struct CurrentWeather {
     let windSpeed : Double
     let weatherTemp : Double
     let weatherPressure : Double
+    let tempLowest : Double
+    let tempHighest : Double
 }
 
 extension CurrentWeather {
@@ -42,7 +44,9 @@ extension CurrentWeather {
         
         guard let windSpeed = wind["speed"] as? Double,
             let weatherTemp = main["temp"] as? Double,
-            let weatherPressure = main["pressure"] as? Double
+            let weatherPressure = main["pressure"] as? Double,
+            let tempMin = main["temp_min"] as? Double,
+            let tempMax = main["temp_max"] as? Double
         else {
             return nil
         }
@@ -60,6 +64,8 @@ extension CurrentWeather {
         self.windSpeed = windSpeed
         self.weatherPressure = weatherPressure
         self.weatherTemp = weatherTemp
+        self.tempLowest = tempMin
+        self.tempHighest = tempMax
     }
 }
 
