@@ -22,6 +22,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             hourly?.forEach({ print($0.weatherDetails) })
             
             currently?.forEach({ print($0.weatherDetails) })
+            
+            daily?.forEach({ print($0.weatherDetails) })
         })
         
 //        queryData.getWeatherData(queryInfo: queryType.hourly) { results in

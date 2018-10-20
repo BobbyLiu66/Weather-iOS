@@ -24,7 +24,7 @@ struct WeatherData: Codable {
 }
 
 extension WeatherData {
-    init?(json weatherDictionary: [String: Any], dataType: queryType) {
+    init?(json weatherDictionary: [String: Any], dataType: QueryDataType) {
         switch dataType {
         case .currently:
             if let apparentTemperature = weatherDictionary["app_temp"] as? Double,

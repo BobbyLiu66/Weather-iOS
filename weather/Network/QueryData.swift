@@ -7,17 +7,18 @@
 //
 
 import Foundation
+
+enum QueryDataType: String {
+    case hourly, currently, daily
+}
+
 class QueryData {
-    
-    enum dataType{
-        case hourly, daily, currently
-    }
     
     var currentlyWeatherResult : [CurrentlyWeatherData] = []
     
     var hourlyWeatherResult : [HourlyWeatherData] = []
     
-    var dailyWeatherResult : [WeatherData] = []
+    var dailyWeatherResult : [DailyWeatherData] = []
     
     var dataTask: URLSessionDataTask?
     
@@ -27,7 +28,7 @@ class QueryData {
     
     //FIXME: queryType should be an enum with daily or hourly
     
-    func executeMultiTask(completion: @escaping ([HourlyWeatherData]?, [CurrentlyWeatherData]?, [WeatherData]?)->()) {
+    func executeMultiTask(completion: @escaping ([HourlyWeatherData]?, [CurrentlyWeatherData]?, [DailyWeatherData]?)->()) {
         //TODO: instance need to be stored seperately
         let endpoint = "https://api.weatherbit.io/v2.0"
         
@@ -40,7 +41,7 @@ class QueryData {
         
         
         //FIXME: based on location and based on city name (need a new api to match input city name in version 2)
-        let newQuery = "city=Raleigh,NC&key=418b3cace1ac4ba39df2498460018436&hours=2"
+        let newQuery = "city=Raleigh,NC&key=418b3cace1ac4ba39df2498460018436&hours=2&days=2"
         
         
         let taskGroup = DispatchGroup()
@@ -81,7 +82,11 @@ class QueryData {
                 let response = response as? HTTPURLResponse,
                 response.statusCode == 200 {
                 
-//                self.updateWeatherData(dailyData, dataType: .daily)
+                let dailyResult = try! JSONDecoder().decode(DailyWeatherData.self, from: dailyData)
+                
+                self.dailyWeatherResult.removeAll()
+                
+                self.dailyWeatherResult.append(dailyResult)
                 
                 taskGroup.leave()
             }
