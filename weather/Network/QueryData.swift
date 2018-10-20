@@ -13,7 +13,7 @@ class QueryData {
         case hourly, daily, currently
     }
     
-    var currentlyWeatherResult : [WeatherData] = []
+    var currentlyWeatherResult : [CurrentlyWeatherData] = []
     
     var hourlyWeatherResult : [HourlyWeatherData] = []
     
@@ -27,7 +27,7 @@ class QueryData {
     
     //FIXME: queryType should be an enum with daily or hourly
     
-    func executeMultiTask(completion: @escaping ([HourlyWeatherData]?, [WeatherData]?, [WeatherData]?)->()) {
+    func executeMultiTask(completion: @escaping ([HourlyWeatherData]?, [CurrentlyWeatherData]?, [WeatherData]?)->()) {
         //TODO: instance need to be stored seperately
         let endpoint = "https://api.weatherbit.io/v2.0"
         
@@ -100,7 +100,11 @@ class QueryData {
                 let response = response as? HTTPURLResponse,
                 response.statusCode == 200 {
                 
-//                self.updateWeatherData(currentlyData, dataType: .currently)
+                let currentlyResult = try! JSONDecoder().decode(CurrentlyWeatherData.self, from: currentlyData)
+                
+                self.currentlyWeatherResult.removeAll()
+                
+                self.currentlyWeatherResult.append(currentlyResult)
                 
                 taskGroup.leave()
             }
