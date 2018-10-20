@@ -8,10 +8,20 @@
 
 import Foundation
 
+extension DateFormatter {
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }()
+}
+
 struct HourlyWeatherDataDetails: Codable {
     let windSpeed: Double
-    // TODO: decode local time to Date type
-    let localTime: String
+    let localTime: Date
     let temperature: Double
     let appTemperature: Double
     let weatherIcon: String
@@ -37,7 +47,15 @@ struct HourlyWeatherDataDetails: Codable {
         self.windSpeed = try container.decode(Double.self, forKey: .windSpeed)
         self.temperature = try container.decode(Double.self, forKey: .temperature)
         self.appTemperature = try container.decode(Double.self, forKey: .appTemperature)
-        self.localTime = try container.decode(String.self, forKey: .localTime)
+        let localTime = try container.decode(String.self, forKey: .localTime)
+        let formatter = DateFormatter.dateFormatter
+        if let date = formatter.date(from: localTime) {
+            self.localTime = date
+        }
+        else {
+            self.localTime = Date()
+        }
+        
         
         let weather = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .weather)
         self.weatherCode = try weather.decode(Int.self, forKey: .weatherCode)

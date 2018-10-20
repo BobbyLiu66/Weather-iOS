@@ -41,8 +41,7 @@ class QueryData {
         
         
         //FIXME: based on location and based on city name (need a new api to match input city name in version 2)
-        let newQuery = "city=Raleigh,NC&key=418b3cace1ac4ba39df2498460018436&hours=2&days=2"
-        
+        let newQuery = "city=London,UK&key=418b3cace1ac4ba39df2498460018436&hours=2&days=2"
         
         let taskGroup = DispatchGroup()
         
