@@ -9,7 +9,15 @@
 import Foundation
 class QueryData {
     
-    var weatherData : [CurrentWeather] = []
+    enum dataType{
+        case hourly, daily, currently
+    }
+    
+    var currentlyWeatherResult : [WeatherData] = []
+    
+    var hourlyWeatherResult : [HourlyWeatherData] = []
+    
+    var dailyWeatherResult : [WeatherData] = []
     
     var dataTask: URLSessionDataTask?
     
@@ -17,42 +25,92 @@ class QueryData {
     
     let defaultSession = URLSession(configuration: .default)
     
-    func getSearchResults(searchTerm: String, completion: @escaping ([CurrentWeather]?)->()) {
-        
-        dataTask?.cancel()
-        
-        if var urlComponents = URLComponents(string: "https://api.openweathermap.org/data/2.5/weather") {
-            //FIXME: appID different type of parameter
-            urlComponents.query = "q=London&APPID=676fb922b841e438eab020fcd29eaba6&units=metric"
-            
-            guard let url = urlComponents.url else { return }
-            
-            dataTask = defaultSession.dataTask(with: url) { data, response, error in
-                defer { self.dataTask = nil }
-                
-                if let error = error {
-                    self.errorMessage += "DataTask error: " + error.localizedDescription + "\n"
-                } else if let data = data,
-                    let response = response as? HTTPURLResponse,
-                    response.statusCode == 200 {
-                    self.updateSearchResults(data)
-                    
-                    DispatchQueue.main.async {
-                        completion(self.weatherData)
-                    }
-                }
-            }
-            
-            dataTask?.resume()
-        }
-    }
+    //FIXME: queryType should be an enum with daily or hourly
     
-    func updateSearchResults(_ data: Data) {
-        weatherData.removeAll()
-        if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-            if let weather = CurrentWeather(weatherDictionary: json!) {
-                weatherData.append(weather)
+    func executeMultiTask(completion: @escaping ([HourlyWeatherData]?, [WeatherData]?, [WeatherData]?)->()) {
+        //TODO: instance need to be stored seperately
+        let endpoint = "https://api.weatherbit.io/v2.0"
+        
+        enum queryType: String {
+            case hourly = "/forecast/hourly"
+            case daily = "/forecast/daily"
+            case current = "/current"
+        }
+        
+        
+        
+        //FIXME: based on location and based on city name (need a new api to match input city name in version 2)
+        let newQuery = "city=Raleigh,NC&key=418b3cace1ac4ba39df2498460018436&hours=2"
+        
+        
+        let taskGroup = DispatchGroup()
+        
+        // MARK:- Update hourly forcast data next 12 hours
+        taskGroup.enter()
+        guard var hourlyUrlComponents = URLComponents(string: endpoint + queryType.hourly.rawValue) else {
+            return
+        }
+        hourlyUrlComponents.query = newQuery
+        TaskManager.shared.dataTask(with: hourlyUrlComponents.url!) { (data, response, error) in
+            if let error = error {
+                self.errorMessage += "hourly data error: " + error.localizedDescription + "\n"
+            } else if let hourlyData = data,
+                let response = response as? HTTPURLResponse,
+                response.statusCode == 200 {
+                
+                let hourlyResult = try! JSONDecoder().decode(HourlyWeatherData.self, from: hourlyData)
+                
+                self.hourlyWeatherResult.removeAll()
+                
+                self.hourlyWeatherResult.append(hourlyResult)
+                
+                taskGroup.leave()
             }
         }
+        
+        //MARK:- Update daily data
+        taskGroup.enter()
+        guard var dailyUrlComponents = URLComponents(string: endpoint + queryType.daily.rawValue) else {
+            return
+        }
+        dailyUrlComponents.query = newQuery
+        TaskManager.shared.dataTask(with: dailyUrlComponents.url!) { (data, response, error) in
+            if let error = error {
+                self.errorMessage += "daily data error: " + error.localizedDescription + "\n"
+            } else if let dailyData = data,
+                let response = response as? HTTPURLResponse,
+                response.statusCode == 200 {
+                
+//                self.updateWeatherData(dailyData, dataType: .daily)
+                
+                taskGroup.leave()
+            }
+        }
+        
+        //MARK:- Update currently data
+        taskGroup.enter()
+        guard var currentlyUrlComponents = URLComponents(string: endpoint + queryType.current.rawValue) else {
+            return
+        }
+        currentlyUrlComponents.query = newQuery
+        TaskManager.shared.dataTask(with: currentlyUrlComponents.url!) { (data, response, error) in
+            if let error = error {
+                self.errorMessage += "currently data error: " + error.localizedDescription + "\n"
+            } else if let currentlyData = data,
+                let response = response as? HTTPURLResponse,
+                response.statusCode == 200 {
+                
+//                self.updateWeatherData(currentlyData, dataType: .currently)
+                
+                taskGroup.leave()
+            }
+        }
+        
+        
+        //4. Notify when all task completed
+        taskGroup.notify(queue: DispatchQueue.main, work: DispatchWorkItem(block: {
+            completion(self.hourlyWeatherResult, self.currentlyWeatherResult, self.dailyWeatherResult)
+        }))
+        
     }
 }

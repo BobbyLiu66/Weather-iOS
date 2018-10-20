@@ -10,7 +10,7 @@ import UIKit
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var currentWeather : [CurrentWeather] = []
+    var currentWeather : [WeatherData] = []
     
     override func viewDidLoad() {
         
@@ -18,21 +18,25 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         let queryData = QueryData()
         
-        queryData.getSearchResults(searchTerm: "123") { results in
-            if let results = results {
-                
-                self.currentWeather = results
-                
-                self.weatherCondition.text = results.first?.weatherDescription
-                
-                self.degree.text = results.first?.weatherTemp.toString()
-                
-                self.weatherCondition.text = results.first?.weatherDescription
-                
-                self.weatherTableView.reloadData()
-            }
-            
-        }
+        queryData.executeMultiTask(completion: { hourly, currently, daily in
+            hourly?.forEach({ print($0.weatherDetails) })
+        })
+        
+//        queryData.getWeatherData(queryInfo: queryType.hourly) { results in
+//            if let results as? [CurrentWeather] = results {
+//
+//                self.currentWeather = results
+//
+//                self.weatherCondition.text = results.first?.weatherDescription
+//
+//                self.degree.text = results.first?.weatherTemp.toString()
+//
+//                self.weatherCondition.text = results.first?.weatherDescription
+//
+//                self.weatherTableView.reloadData()
+//            }
+//
+//        }
     }
     
     
@@ -84,8 +88,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             
             cell.today.text = Date().dayOfWeek()!
-            cell.highestTemp.text = currentWeather.first?.tempHighest.toString()
-            cell.lowestTemp.text = currentWeather.first?.tempLowest.toString()
+//            cell.highestTemp.text = currentWeather.first?.tempHighest.toString()
+//            cell.lowestTemp.text = currentWeather.first?.tempLowest.toString()
             
             return cell
         } else if indexPath.row == 1 {
@@ -159,6 +163,12 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
 extension Double {
     func toString() -> String {
         return String(format: "%.0f",self)
+    }
+}
+
+extension Int {
+    func toString() -> String {
+        return String(format: "%.0f", self)
     }
 }
 
