@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TodayDetailCollectionViewCell: UICollectionViewCell {
+class HourlyDetailCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var hour: UILabel!
     

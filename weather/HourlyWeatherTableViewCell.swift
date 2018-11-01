@@ -8,29 +8,30 @@
 
 import UIKit
 
-class DetailWeatherTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
+class HourlyWeatherTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    var hourlyWeatherData: [HourlyWeatherDataDetails] = []
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return hourlyWeatherData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TodayDetailCollectionViewCell", for: indexPath) as? TodayDetailCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourlyDetailCollectionViewCell", for: indexPath) as? HourlyDetailCollectionViewCell else {
             fatalError("The dequeued cell is not an instance of TodayDetailCollectionViewCell.")
         }
-        cell.temperature.text = "12"
-        cell.hour.text = "Now"
+        cell.temperature.text = hourlyWeatherData[indexPath.row].temperature.toString() + "°"
+//        print(Calendar.current.component(.hour, from: hourlyWeatherData[indexPath.row].localTime))
+        cell.hour.text = String(Calendar.current.component(.hour, from: hourlyWeatherData[indexPath.row].localTime))
         return cell
     }
     
 
-    @IBOutlet weak var detailWeatherCollectionView: UICollectionView!{
+    @IBOutlet weak var hourlyWeatherCollectionView: UICollectionView!{
         didSet{
-            detailWeatherCollectionView.dataSource = self
-            detailWeatherCollectionView.delegate = self
+            hourlyWeatherCollectionView.dataSource = self
+            hourlyWeatherCollectionView.delegate = self
         }
     }
     
@@ -44,5 +45,4 @@ class DetailWeatherTableViewCell: UITableViewCell, UICollectionViewDataSource, U
 
         // Configure the view for the selected state
     }
-
 }

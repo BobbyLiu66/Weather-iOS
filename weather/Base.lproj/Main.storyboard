@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -59,13 +59,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEL-MZ-TiR">
-                                                    <rect key="frame" x="332" y="-2" width="29" height="53.5"/>
+                                                    <rect key="frame" x="518" y="-2" width="29" height="53.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzP-wG-mWA">
-                                                    <rect key="frame" x="371" y="-2" width="28" height="53.5"/>
+                                                    <rect key="frame" x="557" y="-2" width="28" height="53.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="23"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -91,15 +91,15 @@
                                             <outlet property="today" destination="yY4-9L-6Bp" id="jMW-Qb-urv"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailWeatherTableViewCell" rowHeight="120" id="CVf-Sl-gzQ" customClass="DetailWeatherTableViewCell" customModule="weather" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailWeatherTableViewCell" rowHeight="120" id="CVf-Sl-gzQ" userLabel="HourlyWeatherTableViewCell" customClass="HourlyWeatherTableViewCell" customModule="weather" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="78" width="414" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CVf-Sl-gzQ" id="git-48-Zap">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="119.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SK2-ua-eCQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SK2-ua-eCQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="116"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FgI-Ft-HWL">
@@ -109,7 +109,7 @@
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
                                                     <cells>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TodayDetailCollectionViewCell" id="7HO-bT-b6u" customClass="TodayDetailCollectionViewCell" customModule="weather" customModuleProvider="target">
+                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HourlyDetailCollectionViewCell" id="7HO-bT-b6u" customClass="HourlyDetailCollectionViewCell" customModule="weather" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="65" height="116"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -146,17 +146,11 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="detailWeatherCollectionView" destination="SK2-ua-eCQ" id="t0q-CO-xiB"/>
+                                            <outlet property="hourlyWeatherCollectionView" destination="SK2-ua-eCQ" id="zpj-fd-hUC"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6g4-WW-qnH">
-                                <rect key="frame" x="254.5" y="192" width="32.5" height="95.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="80"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -166,9 +160,6 @@
                             <constraint firstItem="VYR-Li-2i7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Mrx-AW-Rpb"/>
                             <constraint firstItem="5QF-AM-dNm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="NCo-1h-86z"/>
                             <constraint firstItem="VYR-Li-2i7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="59.999999999999986" id="hwT-q3-bjR"/>
-                            <constraint firstItem="6g4-WW-qnH" firstAttribute="firstBaseline" secondItem="mQW-5x-dcZ" secondAttribute="firstBaseline" id="pYe-5g-K5n"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6g4-WW-qnH" secondAttribute="trailing" constant="127" id="sWv-Le-LKJ"/>
-                            <constraint firstItem="6g4-WW-qnH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mQW-5x-dcZ" secondAttribute="trailing" id="uYG-AV-Yl7"/>
                             <constraint firstItem="5QF-AM-dNm" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="y5z-ze-VSO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
