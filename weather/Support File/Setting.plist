@@ -5,7 +5,7 @@
 	<key>weatherDays</key>
 	<string>2</string>
 	<key>weatherHours</key>
-	<string>12</string>
+	<string>24</string>
 	<key>weatherKey</key>
 	<string>418b3cace1ac4ba39df2498460018436</string>
 </dict>

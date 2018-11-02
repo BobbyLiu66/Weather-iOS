@@ -25,9 +25,7 @@ class TaskManager {
             let _ = session.dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
                 DispatchQueue.main.async {
                     guard let completionHandlers = self?.tasks[url] else { return }
-                    
                     for handler in completionHandlers {
-                        
                         handler(data, response, error)
                     }
                 }

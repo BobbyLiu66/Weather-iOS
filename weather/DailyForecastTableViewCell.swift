@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CurrentWeatherTableViewCell: UITableViewCell {
+class DailyForecastTableViewCell: UITableViewCell {
 
     @IBOutlet weak var today: UILabel!
     
@@ -23,7 +23,6 @@ class CurrentWeatherTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
 
