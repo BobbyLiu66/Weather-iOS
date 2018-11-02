@@ -84,9 +84,7 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
             return cell
         }
         else if indexPath.row == 1{
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "DetailWeatherTableViewCell", for: indexPath) as? HourlyForecastTableViewCell else {
-                fatalError("The dequeued cell is not an instance of DetailWeatherTableViewCell.")
-            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DetailWeatherTableViewCell", for: indexPath) as! HourlyForecastTableViewCell
             cell.hourlyWeatherData = self.hourlyWeather
             cell.hourlyWeatherCollectionView.reloadData()
             return cell
