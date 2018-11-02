@@ -18,6 +18,7 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     @IBOutlet weak var degree: UILabel!
     
+    // MARK :- weather data
     var currentlyWeather: [CurrentlyWeatherDataDetails] = []
     
     var hourlyWeather: [HourlyWeatherDataDetails] = []
@@ -55,6 +56,8 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
         super.didReceiveMemoryWarning()
     }
     
+    
+    // MARK :- Main table view function
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var height : CGFloat
         if indexPath.row == 1 {

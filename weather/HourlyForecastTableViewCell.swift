@@ -20,14 +20,15 @@ class HourlyForecastTableViewCell: UITableViewCell, UICollectionViewDataSource, 
         return hourlyWeatherData.count
     }
     
+    
+    //MARK :- collection cell display hourly forecast information
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourlyDetailCollectionViewCell", for: indexPath) as? HourlyDetailCollectionViewCell else {
-            fatalError("The dequeued cell is not an instance of TodayDetailCollectionViewCell.")
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourlyDetailCollectionViewCell", for: indexPath) as! HourlyDetailCollectionViewCell
         cell.temperature.text = hourlyWeatherData[indexPath.row].temperature.toString() + "°"
         cell.hour.text = String(Calendar.current.component(.hour, from: hourlyWeatherData[indexPath.row].localTime))
 
         return cell
     }
+    
     @IBOutlet weak var hourlyWeatherCollectionView: UICollectionView!
 }

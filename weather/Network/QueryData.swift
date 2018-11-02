@@ -51,12 +51,15 @@ class QueryData {
             
             let taskGroup = DispatchGroup()
             
-            // MARK:- Update hourly forcast data next 12 hours
+            
+            // MARK:- Get hourly forcast data next 12 hours
             taskGroup.enter()
             guard var hourlyUrlComponents = URLComponents(string: endpoint + queryType.hourly.rawValue) else {
                 return
             }
+            
             hourlyUrlComponents.query = newQuery
+            
             TaskManager.shared.dataTask(with: hourlyUrlComponents.url!) { (data, response, error) in
                 if let error = error {
                     self.errorMessage += "hourly data error: \(error.localizedDescription)\n"
@@ -74,13 +77,15 @@ class QueryData {
                 }
             }
             
-            //MARK:- Update daily data
-            
+            //MARK:- Get daily data
             taskGroup.enter()
+            
             guard var dailyUrlComponents = URLComponents(string: endpoint + queryType.daily.rawValue) else {
                 return
             }
+            
             dailyUrlComponents.query = newQuery
+            
             TaskManager.shared.dataTask(with: dailyUrlComponents.url!) { (data, response, error) in
                 if let error = error {
                     self.errorMessage += "daily data error: \(error.localizedDescription)\n"
@@ -98,11 +103,12 @@ class QueryData {
                 }
             }
             
-            //MARK:- Update currently data
+            //MARK:- Get currently data
             taskGroup.enter()
             guard var currentlyUrlComponents = URLComponents(string: endpoint + queryType.current.rawValue) else {
                 return
             }
+            
             currentlyUrlComponents.query = newQuery
             TaskManager.shared.dataTask(with: currentlyUrlComponents.url!) { (data, response, error) in
                 if let error = error {
@@ -121,8 +127,6 @@ class QueryData {
                 }
             }
             
-            
-            //4. Notify when all task completed
             taskGroup.notify(queue: DispatchQueue.main, work: DispatchWorkItem(block: {
                 completion(self.hourlyWeatherResult, self.currentlyWeatherResult, self.dailyWeatherResult)
             }))
