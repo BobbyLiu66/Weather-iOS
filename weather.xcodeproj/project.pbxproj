@@ -91,7 +91,6 @@
 		3AD31A38215E006800949451 = {
 			isa = PBXGroup;
 			children = (
-				3A1D8F56218CF684000EAE6D /* .gitignore */,
 				3AD31A43215E006800949451 /* weather */,
 				3AD31A42215E006800949451 /* Products */,
 			);
@@ -118,6 +117,7 @@
 				3AD31A59216043F300949451 /* DailyForecastTableViewCell.swift */,
 				3A0B96BE218C46F000251698 /* MainTableViewController.swift */,
 				3AD31A50215E006900949451 /* Info.plist */,
+				3A1D8F56218CF684000EAE6D /* .gitignore */,
 			);
 			path = weather;
 			sourceTree = "<group>";

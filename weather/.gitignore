@@ -77,6 +77,6 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-Setting.plist
+Support File/Setting.plist
 
-.DS_Store
+*.DS_Store
