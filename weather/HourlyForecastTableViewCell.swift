@@ -24,9 +24,12 @@ class HourlyForecastTableViewCell: UITableViewCell, UICollectionViewDataSource, 
     //MARK :- collection cell display hourly forecast information
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourlyDetailCollectionViewCell", for: indexPath) as! HourlyDetailCollectionViewCell
+        cell.layer.backgroundColor = UIColor.clear.cgColor
+        
         cell.temperature.text = hourlyWeatherData[indexPath.row].temperature.toString() + "°"
+        
         cell.hour.text = String(Calendar.current.component(.hour, from: hourlyWeatherData[indexPath.row].localTime))
-
+        cell.weatherIcon.image = UIImage(named: hourlyWeatherData[indexPath.row].weatherIcon)
         return cell
     }
     

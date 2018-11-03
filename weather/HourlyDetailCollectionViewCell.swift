@@ -14,4 +14,6 @@ class HourlyDetailCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var temperature: UILabel!
     
+    @IBOutlet weak var weatherIcon: UIImageView!
+    
 }

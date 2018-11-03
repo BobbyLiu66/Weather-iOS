@@ -16,6 +16,8 @@ class DailyForecastTableViewCell: UITableViewCell {
     
     @IBOutlet weak var lowestTemp: UILabel!
     
+    @IBOutlet weak var weatherIcon: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         

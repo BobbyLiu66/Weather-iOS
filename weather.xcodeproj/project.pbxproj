@@ -14,9 +14,9 @@
 		3A07DDFF217B3B61004DCF27 /* DailyWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A07DDFE217B3B61004DCF27 /* DailyWeatherData.swift */; };
 		3A07DE01217B3B92004DCF27 /* DailyWeatherDataDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A07DE00217B3B92004DCF27 /* DailyWeatherDataDetails.swift */; };
 		3A0B96BF218C46F000251698 /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B96BE218C46F000251698 /* MainTableViewController.swift */; };
+		3A0C8A8B218D86CB00483F5D /* demo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3A0C8A8A218D86CB00483F5D /* demo.gif */; };
 		3A1ABA26218A4A3A00BB8374 /* Setting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A1ABA25218A4A3A00BB8374 /* Setting.plist */; };
 		3A1D8F57218CF684000EAE6D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3A1D8F56218CF684000EAE6D /* .gitignore */; };
-		3A1D8F59218CFDE3000EAE6D /* demo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3A1D8F58218CFDE3000EAE6D /* demo.gif */; };
 		3A544BB62162000C0066CCF6 /* HourlyDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A544BB52162000C0066CCF6 /* HourlyDetailCollectionViewCell.swift */; };
 		3AAB2353216B451E002230AD /* QueryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AAB2352216B451E002230AD /* QueryData.swift */; };
 		3AD31A45215E006800949451 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD31A44215E006800949451 /* AppDelegate.swift */; };
@@ -36,9 +36,9 @@
 		3A07DDFE217B3B61004DCF27 /* DailyWeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherData.swift; sourceTree = "<group>"; };
 		3A07DE00217B3B92004DCF27 /* DailyWeatherDataDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherDataDetails.swift; sourceTree = "<group>"; };
 		3A0B96BE218C46F000251698 /* MainTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
+		3A0C8A8A218D86CB00483F5D /* demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = demo.gif; path = ../../../../../Downloads/demo.gif; sourceTree = "<group>"; };
 		3A1ABA25218A4A3A00BB8374 /* Setting.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Setting.plist; sourceTree = "<group>"; };
 		3A1D8F56218CF684000EAE6D /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		3A1D8F58218CFDE3000EAE6D /* demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = demo.gif; sourceTree = "<group>"; };
 		3A544BB52162000C0066CCF6 /* HourlyDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyDetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		3AAB2352216B451E002230AD /* QueryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryData.swift; sourceTree = "<group>"; };
 		3AD31A41215E006800949451 /* weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,7 +121,7 @@
 		3AD31A582160439000949451 /* Support File */ = {
 			isa = PBXGroup;
 			children = (
-				3A1D8F58218CFDE3000EAE6D /* demo.gif */,
+				3A0C8A8A218D86CB00483F5D /* demo.gif */,
 				3A1ABA25218A4A3A00BB8374 /* Setting.plist */,
 				3AD31A44215E006800949451 /* AppDelegate.swift */,
 				3AD31A4B215E006900949451 /* Assets.xcassets */,
@@ -189,7 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A1D8F57218CF684000EAE6D /* .gitignore in Resources */,
-				3A1D8F59218CFDE3000EAE6D /* demo.gif in Resources */,
+				3A0C8A8B218D86CB00483F5D /* demo.gif in Resources */,
 				3AD31A4F215E006900949451 /* LaunchScreen.storyboard in Resources */,
 				3A1ABA26218A4A3A00BB8374 /* Setting.plist in Resources */,
 				3AD31A4C215E006900949451 /* Assets.xcassets in Resources */,

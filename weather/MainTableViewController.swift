@@ -18,6 +18,8 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     @IBOutlet weak var degree: UILabel!
     
+    @IBOutlet weak var backgroundImage: UIImageView!
+    
     // MARK :- weather data
     var currentlyWeather: [CurrentlyWeatherDataDetails] = []
     
@@ -29,6 +31,9 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
         mainWeatherTableView.dataSource = self
         mainWeatherTableView.delegate = self
+        mainWeatherTableView.backgroundColor = UIColor.clear
+        
+        backgroundImage.image = UIImage(named: "day")
         
         let queryData = QueryData()
         
@@ -70,27 +75,39 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 9
     }
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // MARK :- today forecast
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CurrentWeatherTableViewCell", for: indexPath) as! DailyForecastTableViewCell
-            
             cell.today.text = Date().dayOfWeek()!
             cell.highestTemp.text = dailyWeather.first?.hightestTemp.toString()
-            
             cell.lowestTemp.text = dailyWeather.first?.lowestTemp.toString()
+            cell.layer.backgroundColor = UIColor.clear.cgColor
             return cell
         }
         else if indexPath.row == 1{
+            // MARK :- 12 hours forecast
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailWeatherTableViewCell", for: indexPath) as! HourlyForecastTableViewCell
             cell.hourlyWeatherData = self.hourlyWeather
             cell.hourlyWeatherCollectionView.reloadData()
+            cell.layer.backgroundColor = UIColor.clear.cgColor
             return cell
         }
         else {
-            return UITableViewCell()
+            // MARK :- 7 days forecast
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DailyWeatherTableViewCell", for: indexPath) as! DailyForecastTableViewCell
+            if indexPath.row - 1 < dailyWeather.count {
+                cell.highestTemp.text = dailyWeather[indexPath.row - 1].hightestTemp.toString()
+                cell.lowestTemp.text = dailyWeather[indexPath.row - 1].lowestTemp.toString()
+                cell.today.text = dailyWeather[indexPath.row - 1].date.dayOfWeek()!
+                cell.weatherIcon.image = UIImage(named: dailyWeather[indexPath.row - 1].weatherIcon)
+                cell.layer.backgroundColor = UIColor.clear.cgColor
+            }
+            
+            return cell
         }
         
     }

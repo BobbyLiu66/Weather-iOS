@@ -8,11 +8,22 @@
 
 import Foundation
 
+extension DateFormatter {
+    static let yyyymmdd: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }()
+}
+
 struct DailyWeatherDataDetails: Codable {
     let windSpeed: Double
     let temperature: Double
     let lowestTemp: Double
     let hightestTemp: Double
+    let date: Date
     
     let weatherIcon: String
     let weatherCode: Int
@@ -30,6 +41,7 @@ struct DailyWeatherDataDetails: Codable {
         case weatherCode = "code"
         case weatherDescription = "description"
         case weatherIcon = "icon"
+        case date = "valid_date"
         
         }
     
@@ -45,6 +57,15 @@ struct DailyWeatherDataDetails: Codable {
         self.weatherCode = try weather.decode(Int.self, forKey: .weatherCode)
         self.weatherIcon = try weather.decode(String.self, forKey: .weatherIcon)
         self.weatherDescription = try weather.decode(String.self, forKey: .weatherDescription)
+        
+        let localTime = try container.decode(String.self, forKey: .date)
+        let formatter = DateFormatter.yyyymmdd
+        if let date = formatter.date(from: localTime) {
+            self.date = date
+        }
+        else {
+            self.date = Date()
+        }
     }
     
     func encode(to encoder: Encoder) throws {
