@@ -5,7 +5,7 @@ Weather app similar with native app
 Swift, UITableView, UICollectionView, Codeable, TaskManager, URLSession
 
 ### TODO
-1. Implement daily forecast
+~~1. Implement daily forecast~~
 2. Get real position
 3. Update when pull down
 4. Support input location
