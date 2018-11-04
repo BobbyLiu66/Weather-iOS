@@ -27,7 +27,7 @@ class QueryData {
     
     let defaultSession = URLSession(configuration: .default)
     
-    func executeMultiTask(location: CLLocationCoordinate2D, completion: @escaping ([HourlyWeatherData]?, [CurrentlyWeatherData]?, [DailyWeatherData]?)->()) {
+    func executeMultiTask(location: CLLocationCoordinate2D?, cityName: String?, completion: @escaping ([HourlyWeatherData]?, [CurrentlyWeatherData]?, [DailyWeatherData]?)->()) {
         
         let endpoint = "https://api.weatherbit.io/v2.0"
         
@@ -47,10 +47,14 @@ class QueryData {
             forecastHours = settingDict["weatherHours"] as! String
             forecastDays = settingDict["weatherDays"] as! String
             
-            //FIXME: based on location and based on city name (need a new api to match input city name in version 2)
-//            let newQuery = "city=London,UK&key=\(apiKey)&hours=\(forecastHours)&days=\(forecastDays)"
+            var queryParameters = "key=\(apiKey)&hours=\(forecastHours)&days=\(forecastDays)"
             
-            let newQuery = "lat=\(location.latitude)&lon=\(location.longitude)&key=\(apiKey)&hours=\(forecastHours)&days=\(forecastDays)"
+            if let location = location {
+                queryParameters += "&lat=\(location.latitude)&lon=\(location.longitude)"
+            }
+            else if let cityName = cityName {
+                queryParameters += "&city=\(cityName)"
+            }
             
             let taskGroup = DispatchGroup()
             
@@ -61,7 +65,7 @@ class QueryData {
                 return
             }
             
-            hourlyUrlComponents.query = newQuery
+            hourlyUrlComponents.query = queryParameters
             
             TaskManager.shared.dataTask(with: hourlyUrlComponents.url!) { (data, response, error) in
                 if let error = error {
@@ -87,7 +91,7 @@ class QueryData {
                 return
             }
             
-            dailyUrlComponents.query = newQuery
+            dailyUrlComponents.query = queryParameters
             
             TaskManager.shared.dataTask(with: dailyUrlComponents.url!) { (data, response, error) in
                 if let error = error {
@@ -112,7 +116,7 @@ class QueryData {
                 return
             }
             
-            currentlyUrlComponents.query = newQuery
+            currentlyUrlComponents.query = queryParameters
             TaskManager.shared.dataTask(with: currentlyUrlComponents.url!) { (data, response, error) in
                 if let error = error {
                     self.errorMessage += "currently data error: \(error.localizedDescription)\n"

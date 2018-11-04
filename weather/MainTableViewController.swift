@@ -48,7 +48,6 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         }
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,15 +55,14 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        //FIXME: location parameter should be optional
-        getData(location: locValue)
+        guard let currentLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        getData(location: currentLocation, inputCity: nil)
     }
     
-    func getData(location: CLLocationCoordinate2D) {
+    func getData(location: CLLocationCoordinate2D?, inputCity: String?) {
         let queryData = QueryData()
         
-        queryData.executeMultiTask(location: location, completion: { hourly, currently, daily in
+        queryData.executeMultiTask(location: location, cityName: inputCity, completion: { hourly, currently, daily in
             
             self.currentlyWeather = currently!.first!.weatherDetails
             self.dailyWeather = daily!.first!.weatherDetails
@@ -95,7 +93,7 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 9
+        return dailyWeather.count + 1
     }
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
