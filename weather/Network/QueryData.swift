@@ -58,7 +58,6 @@ class QueryData {
             
             let taskGroup = DispatchGroup()
             
-            
             // MARK:- Get hourly forcast data next 12 hours
             taskGroup.enter()
             guard var hourlyUrlComponents = URLComponents(string: endpoint + queryType.hourly.rawValue) else {
@@ -66,8 +65,8 @@ class QueryData {
             }
             
             hourlyUrlComponents.query = queryParameters
-            
             TaskManager.shared.dataTask(with: hourlyUrlComponents.url!) { (data, response, error) in
+                
                 if let error = error {
                     self.errorMessage += "hourly data error: \(error.localizedDescription)\n"
                 } else if let hourlyData = data,

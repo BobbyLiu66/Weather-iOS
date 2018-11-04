@@ -28,6 +28,7 @@ class TaskManager {
                     for handler in completionHandlers {
                         handler(data, response, error)
                     }
+                    self?.tasks.removeValue(forKey: url)
                 }
             }).resume()
         }

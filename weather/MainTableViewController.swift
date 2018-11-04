@@ -12,7 +12,11 @@ import MapKit
 
 class MainTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
     
+    private let refreshControl = UIRefreshControl()
+    
     let locationManager = CLLocationManager()
+    
+    var userLocation: CLLocationCoordinate2D?
     
     @IBOutlet weak var mainWeatherTableView: UITableView!
     
@@ -41,8 +45,13 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
         mainWeatherTableView.delegate = self
         mainWeatherTableView.backgroundColor = UIColor.clear
         
+        refreshControl.addTarget(self, action: #selector(refreshWeatherData(_:)), for: .valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing Weather Data ...")
+        
+        self.mainWeatherTableView.refreshControl = refreshControl
+
         self.locationManager.requestWhenInUseAuthorization()
-        //TODO: ask if there is no data in local
+        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -54,12 +63,26 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
         super.didReceiveMemoryWarning()
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let currentLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        getData(location: currentLocation, inputCity: nil)
+    @objc private func refreshWeatherData(_ sender: Any) {
+        getData(location: userLocation, inputCity: nil, isRefresh: true)
     }
     
-    func getData(location: CLLocationCoordinate2D?, inputCity: String?) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // Initially or same location do not need get data multiple time
+        if let userLocation = userLocation {
+            if userLocation.latitude != manager.location?.coordinate.latitude || userLocation.longitude != manager.location?.coordinate.longitude {
+                self.userLocation = manager.location?.coordinate
+                getData(location: userLocation, inputCity: nil, isRefresh: false)
+            }
+        }
+        else {
+            userLocation = manager.location?.coordinate
+            getData(location: userLocation, inputCity: nil, isRefresh: false)
+        }
+    }
+    
+    // MARK :- get weather data
+    func getData(location: CLLocationCoordinate2D?, inputCity: String?, isRefresh: Bool) {
         let queryData = QueryData()
         
         queryData.executeMultiTask(location: location, cityName: inputCity, completion: { hourly, currently, daily in
@@ -75,6 +98,10 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
             self.weatherCondition.text = self.currentlyWeather.first?.weatherDescription
             
             self.cityName.text = self.currentlyWeather.first?.cityName
+            
+            if isRefresh {
+                self.refreshControl.endRefreshing()
+            }
             
             self.mainWeatherTableView.reloadData()
         })
@@ -127,8 +154,9 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
             
             return cell
         }
-        
     }
+    
+    
 
 }
 
