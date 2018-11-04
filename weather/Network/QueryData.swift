@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 enum QueryDataType: String {
     case hourly, currently, daily
@@ -26,7 +27,7 @@ class QueryData {
     
     let defaultSession = URLSession(configuration: .default)
     
-    func executeMultiTask(completion: @escaping ([HourlyWeatherData]?, [CurrentlyWeatherData]?, [DailyWeatherData]?)->()) {
+    func executeMultiTask(location: CLLocationCoordinate2D, completion: @escaping ([HourlyWeatherData]?, [CurrentlyWeatherData]?, [DailyWeatherData]?)->()) {
         
         let endpoint = "https://api.weatherbit.io/v2.0"
         
@@ -47,7 +48,9 @@ class QueryData {
             forecastDays = settingDict["weatherDays"] as! String
             
             //FIXME: based on location and based on city name (need a new api to match input city name in version 2)
-            let newQuery = "city=London,UK&key=\(apiKey)&hours=\(forecastHours)&days=\(forecastDays)"
+//            let newQuery = "city=London,UK&key=\(apiKey)&hours=\(forecastHours)&days=\(forecastDays)"
+            
+            let newQuery = "lat=\(location.latitude)&lon=\(location.longitude)&key=\(apiKey)&hours=\(forecastHours)&days=\(forecastDays)"
             
             let taskGroup = DispatchGroup()
             

@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import CoreLocation
+import MapKit
 
-class MainTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MainTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
+    
+    let locationManager = CLLocationManager()
     
     @IBOutlet weak var mainWeatherTableView: UITableView!
     
@@ -18,7 +22,11 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
     
     @IBOutlet weak var degree: UILabel!
     
-    @IBOutlet weak var backgroundImage: UIImageView!
+    @IBOutlet weak var backgroundImage: UIImageView! {
+        didSet{
+            backgroundImage.image = UIImage(named: "day")
+        }
+    }
     
     // MARK :- weather data
     var currentlyWeather: [CurrentlyWeatherDataDetails] = []
@@ -33,11 +41,30 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
         mainWeatherTableView.delegate = self
         mainWeatherTableView.backgroundColor = UIColor.clear
         
-        backgroundImage.image = UIImage(named: "day")
+        self.locationManager.requestWhenInUseAuthorization()
+        //TODO: ask if there is no data in local
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
         
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        //FIXME: location parameter should be optional
+        getData(location: locValue)
+    }
+    
+    func getData(location: CLLocationCoordinate2D) {
         let queryData = QueryData()
         
-        queryData.executeMultiTask(completion: { hourly, currently, daily in
+        queryData.executeMultiTask(location: location, completion: { hourly, currently, daily in
             
             self.currentlyWeather = currently!.first!.weatherDetails
             self.dailyWeather = daily!.first!.weatherDetails
@@ -53,14 +80,7 @@ class MainTableViewController: UIViewController, UITableViewDataSource, UITableV
             
             self.mainWeatherTableView.reloadData()
         })
-        
-        
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     
     // MARK :- Main table view function
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
