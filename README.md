@@ -6,7 +6,7 @@ Weather app similar with native app
 ~~2. Get real position~~ .   
 ~~3. Update when pull down~~ .      
 4. Support multiple location .   
-5. Support input location .   
+~~5. Support input location .~~   
 6. More animation display data .   
 
 
