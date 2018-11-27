@@ -223,12 +223,12 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pzf-p5-989">
-                                <rect key="frame" x="356" y="44" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Zk-T0-1vQ">
+                                <rect key="frame" x="352" y="44" width="38" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="+"/>
+                                <state key="normal" title="Show"/>
                                 <connections>
-                                    <segue destination="x4i-so-eo0" kind="show" id="kfN-fU-PlV"/>
+                                    <segue destination="1a4-nW-IsS" kind="show" id="Imz-21-Shw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -259,13 +259,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexBackgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="HFs-30-usn">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddLocationCell" id="HFs-30-usn" customClass="AddLocationTableViewCell" customModule="weather" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HFs-30-usn" id="ZIr-iA-D1H">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3sz-vC-Px7">
+                                            <rect key="frame" x="364" y="3" width="30" height="38"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                            <state key="normal" title="+">
+                                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <connections>
+                                                <segue destination="x4i-so-eo0" kind="show" id="6oe-3T-riC"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="°C/°F" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOc-Xy-hlB">
+                                            <rect key="frame" x="20" y="11.5" width="42" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="3sz-vC-Px7" firstAttribute="leading" secondItem="aOc-Xy-hlB" secondAttribute="trailing" constant="302" id="HAM-2U-mOx"/>
+                                        <constraint firstItem="3sz-vC-Px7" firstAttribute="centerY" secondItem="ZIr-iA-D1H" secondAttribute="centerY" id="Pee-8T-QtI"/>
+                                        <constraint firstAttribute="trailing" secondItem="3sz-vC-Px7" secondAttribute="trailing" constant="20" id="RHK-IC-bos"/>
+                                        <constraint firstItem="aOc-Xy-hlB" firstAttribute="centerY" secondItem="ZIr-iA-D1H" secondAttribute="centerY" id="dyZ-DM-a4v"/>
+                                        <constraint firstItem="aOc-Xy-hlB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZIr-iA-D1H" secondAttribute="leadingMargin" id="nCQ-bR-zQk"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -275,6 +301,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="listTableView" destination="0YI-Qh-m0F" id="Xmm-Yy-ooT"/>
                         <outlet property="searchDisplayController" destination="fUD-E5-fqp" id="0be-qD-Cue"/>
                     </connections>
                 </tableViewController>
@@ -288,7 +315,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="48" y="94"/>
+            <point key="canvasLocation" x="59" y="94"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="s3u-CQ-vrG">
